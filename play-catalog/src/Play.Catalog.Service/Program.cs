@@ -6,6 +6,7 @@ namespace Play.Catalog.Service
     using Core.Application.Repositories;
     using Core.Domain.AggregatesModel.CatalogItemAggregate;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Microsoft.OpenApi.Models;
@@ -29,9 +30,11 @@ namespace Play.Catalog.Service
                         configure.UseHttpEndpoint("http://localhost:3100");
                         configure.UseGrpcEndpoint("http://localhost:53100");
                     });
-                    services.AddControllers(options =>
+                    services.AddControllers(options => options.SuppressAsyncSuffixInActionNames = false);
+                    services.AddApiVersioning(options =>
                     {
-                        options.SuppressAsyncSuffixInActionNames = false;
+                        options.DefaultApiVersion = new ApiVersion(1, 0);
+                        options.AssumeDefaultVersionWhenUnspecified = true;
                     });
                     services.AddSwaggerGen(c =>
                         c.SwaggerDoc("v1", new OpenApiInfo

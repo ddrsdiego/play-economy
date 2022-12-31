@@ -6,6 +6,7 @@ namespace Play.Customer.Service
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Core.Application.IoC;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
 
     public class Startup
@@ -14,15 +15,20 @@ namespace Play.Customer.Service
         {
             Configuration = configuration;
         }
-        
+
         public IConfiguration Configuration { get; }
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddApiVersioning(options =>
+            {
+                options.DefaultApiVersion = new ApiVersion(1, 0);
+                options.AssumeDefaultVersionWhenUnspecified = true;
+            });
             services.AddPlayCustomerServices(Configuration);
         }
-        
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

@@ -12,7 +12,8 @@
     using Microsoft.AspNetCore.Mvc;
 
     [ApiController]
-    [Route("items")]
+    [ApiVersion("1")]
+    [Route("api/v{version:apiVersion}/items")]
     public class ItemsController : ControllerBase
     {
         private readonly ICatalogItemRepository _catalogItemRepository;

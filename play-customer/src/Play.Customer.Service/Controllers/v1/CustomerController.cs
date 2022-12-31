@@ -1,14 +1,15 @@
-﻿namespace Play.Customer.Service.Controllers
+﻿namespace Play.Customer.Service.Controllers.v1
 {
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
     using Core.Application.UseCases;
     using Core.Application.UseCases.GetCustomerById;
     using Core.Application.UseCases.RegisterNewCustomer;
     using Core.Application.UseCases.UpdateCustomer;
-    using Microsoft.AspNetCore.Mvc;
 
     [ApiController]
-    [Route("customers")]
+    [ApiVersion("1")]
+    [Route("api/v{version:apiVersion}/customers")]
     public class CustomerController : ControllerBase
     {
         private readonly IUseCaseExecutor<RegisterNewCustomerRequest, RegisterNewCustomerResponse>

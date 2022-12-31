@@ -26,7 +26,7 @@
 
             var client = _httpClientFactory.CreateClient(PlayCatalogServiceName);
             var tasks = catalogItemIds.Select(
-                async catalogItemId => await client.GetAsync($"/items/{catalogItemId}"));
+                async catalogItemId => await client.GetAsync($"/api/v1/items/{catalogItemId}"));
 
             var enumerable = tasks.ToList();
             await Task.WhenAll(enumerable);
