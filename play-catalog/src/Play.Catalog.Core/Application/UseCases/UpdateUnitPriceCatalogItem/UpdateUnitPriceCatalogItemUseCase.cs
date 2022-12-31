@@ -3,7 +3,7 @@ namespace Play.Catalog.Core.Application.UseCases.UpdateUnitPriceCatalogItem
     using Dapr.Client;
     using Domain.AggregatesModel.CatalogItemAggregate;
     using Microsoft.Extensions.Logging;
-    using Play.Catalog.Core.Application.Helpers;
+    using Helpers;
 
     public sealed class
         UpdateUnitPriceCatalogItemUseCase : UseCaseExecutor<UpdateUnitPriceCatalogItemRequest,
