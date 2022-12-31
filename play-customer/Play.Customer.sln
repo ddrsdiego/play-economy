@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{248F036A-A7DE-4CB4-AEAC-59F6B2646C87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Play.Customer.Core", "src\Play.Customer.Core\Play.Customer.Core.csproj", "{13B7A096-C6D8-49C3-80A7-2555D56E121C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Play.Customer.Service", "src\Play.Customer.Service\Play.Customer.Service.csproj", "{AD8F8074-BBCD-48B3-AD9A-028AABACB09A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{13B7A096-C6D8-49C3-80A7-2555D56E121C} = {248F036A-A7DE-4CB4-AEAC-59F6B2646C87}
+		{AD8F8074-BBCD-48B3-AD9A-028AABACB09A} = {248F036A-A7DE-4CB4-AEAC-59F6B2646C87}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{13B7A096-C6D8-49C3-80A7-2555D56E121C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13B7A096-C6D8-49C3-80A7-2555D56E121C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13B7A096-C6D8-49C3-80A7-2555D56E121C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13B7A096-C6D8-49C3-80A7-2555D56E121C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD8F8074-BBCD-48B3-AD9A-028AABACB09A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD8F8074-BBCD-48B3-AD9A-028AABACB09A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD8F8074-BBCD-48B3-AD9A-028AABACB09A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD8F8074-BBCD-48B3-AD9A-028AABACB09A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

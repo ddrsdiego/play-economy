@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1D8805B5-080C-414D-96F0-FD21BCBB81FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Play.Inventory.Service", "src\Play.Inventory.Service\Play.Inventory.Service.csproj", "{7002610B-7024-4EEC-A183-1EBB72ED5A42}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Play.Inventory.Core", "src\Play.Inventory.Core\Play.Inventory.Core.csproj", "{A6E9AFF8-D467-425B-A678-C513FEDFA259}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{D89A8C4B-079D-429C-9AB0-89BA8ADEAE05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Play.Inventory.Core.UnitTest", "test\Play.Inventory.Core.UnitTest\Play.Inventory.Core.UnitTest.csproj", "{7CA4208D-7B21-4A30-98DB-2FA07B22913A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7002610B-7024-4EEC-A183-1EBB72ED5A42} = {1D8805B5-080C-414D-96F0-FD21BCBB81FE}
+		{A6E9AFF8-D467-425B-A678-C513FEDFA259} = {1D8805B5-080C-414D-96F0-FD21BCBB81FE}
+		{7CA4208D-7B21-4A30-98DB-2FA07B22913A} = {D89A8C4B-079D-429C-9AB0-89BA8ADEAE05}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7002610B-7024-4EEC-A183-1EBB72ED5A42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7002610B-7024-4EEC-A183-1EBB72ED5A42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7002610B-7024-4EEC-A183-1EBB72ED5A42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7002610B-7024-4EEC-A183-1EBB72ED5A42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6E9AFF8-D467-425B-A678-C513FEDFA259}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6E9AFF8-D467-425B-A678-C513FEDFA259}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6E9AFF8-D467-425B-A678-C513FEDFA259}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6E9AFF8-D467-425B-A678-C513FEDFA259}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CA4208D-7B21-4A30-98DB-2FA07B22913A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CA4208D-7B21-4A30-98DB-2FA07B22913A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CA4208D-7B21-4A30-98DB-2FA07B22913A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CA4208D-7B21-4A30-98DB-2FA07B22913A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
