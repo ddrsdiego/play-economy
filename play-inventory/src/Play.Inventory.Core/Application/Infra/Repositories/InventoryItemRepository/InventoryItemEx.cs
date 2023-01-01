@@ -1,23 +1,25 @@
-namespace Play.Inventory.Core.Application.Infra.Repositories
+namespace Play.Inventory.Core.Application.Infra.Repositories.InventoryItemRepository
 {
     using System.Runtime.CompilerServices;
+    using CustomerRepository;
     using Domain.AggregateModel.InventoryItemAggregate;
 
-    internal static class InventoryItemEx
+    public static class InventoryItemEx
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static InventoryItemData ToInventoryItemData(this InventoryItem inventoryItemLine)
+        public static InventoryItemStateEntry ToStateEntry(this InventoryItem inventoryItemLine)
         {
             var itemsData = inventoryItemLine.Items
-                .Select(item => new InventoryItemLineData
+                .Select(item => new InventoryItemLineStateEntry
                 {
                     CatalogItemId = item.CatalogItemId,
                     Quantity = item.Quantity,
                     AcquiredAt = item.AcquiredAt,
                 });
 
-            return new InventoryItemData
+            return new InventoryItemStateEntry
             {
+                Id = inventoryItemLine.Customer.CustomerId,
                 UserId = inventoryItemLine.Customer.CustomerId,
                 Items = itemsData,
                 CreatedAt = inventoryItemLine.CreatedAt
@@ -25,12 +27,12 @@ namespace Play.Inventory.Core.Application.Infra.Repositories
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static InventoryItem ToInventoryItem(this InventoryItemData inventoryItemData, CustomerData customerData)
+        public static InventoryItem ToInventoryItem(this InventoryItemStateEntry inventoryItemStateEntry, CustomerStateEntry customerStateEntry)
         {
-            var customer = customerData.ToCustomer();
-            var inventoryItem = new InventoryItem(customer, inventoryItemData.CreatedAt);
+            var customer = customerStateEntry.ToCustomer();
+            var inventoryItem = new InventoryItem(customer, inventoryItemStateEntry.CreatedAt);
 
-            foreach (var item in inventoryItemData.Items)
+            foreach (var item in inventoryItemStateEntry.Items)
             {
                 inventoryItem.AddNewItemLine(new InventoryItemLine(item.CatalogItemId, item.Quantity, item.AcquiredAt));
             }

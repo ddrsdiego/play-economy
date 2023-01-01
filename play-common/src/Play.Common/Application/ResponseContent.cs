@@ -127,11 +127,11 @@
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                if (ContentAsJsonUtf8Bytes is null)
-                {
-                    var value = JsonSerializer.Deserialize(ValueAsJsonString, InputType, JsonSerializerOptions);
-                    ContentAsJsonUtf8Bytes = JsonSerializer.SerializeToUtf8Bytes(value, JsonSerializerOptions);
-                }
+                if (ContentAsJsonUtf8Bytes is { }) 
+                    return ContentAsJsonUtf8Bytes;
+                
+                var value = JsonSerializer.Deserialize(ValueAsJsonString, InputType, JsonSerializerOptions);
+                ContentAsJsonUtf8Bytes = JsonSerializer.SerializeToUtf8Bytes(value, JsonSerializerOptions);
                 return ContentAsJsonUtf8Bytes;
             }
         }
@@ -151,6 +151,12 @@
 
                 return ContentAsJsonString;
             }
+        }
+
+        public bool HasValue
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => !string.IsNullOrEmpty(ContentAsJsonString) || ContentAsJsonUtf8Bytes?.Length > 0;
         }
 
         /// <summary>

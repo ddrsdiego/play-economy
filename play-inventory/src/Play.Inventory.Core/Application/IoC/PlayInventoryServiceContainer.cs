@@ -1,6 +1,5 @@
 ﻿namespace Play.Inventory.Core.Application.IoC
 {
-    using Infra.Clients;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
@@ -10,6 +9,7 @@
             IConfiguration configuration)
         {
             services.AddDapr();
+            services.AddUseCases();
             services.AddSwagger();
             services.AddHttpClients();
             services.AddRepositories();

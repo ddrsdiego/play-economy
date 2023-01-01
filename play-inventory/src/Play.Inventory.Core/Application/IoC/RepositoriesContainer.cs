@@ -1,19 +1,20 @@
 ﻿namespace Play.Inventory.Core.Application.IoC
 {
-    using Domain.AggregateModel.CatalogItemAggregate;
-    using Domain.AggregateModel.CustomerAggregate;
-    using Domain.AggregateModel.InventoryItemAggregate;
+    using Common.Application.Infra.Repositories.Dapr;
     using Infra.Repositories;
+    using Infra.Repositories.CatalogItemRepository;
+    using Infra.Repositories.CustomerRepository;
+    using Infra.Repositories.InventoryItemRepository;
     using Microsoft.Extensions.DependencyInjection;
 
     internal static class RepositoriesContainer
     {
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
-            services.AddSingleton<ICustomerRepository, CustomerRepository>();
-            services.AddSingleton<ICatalogItemRepository, CatalogItemRepository>();
-            services.AddSingleton<IInventoryItemRepository, InventoryItemRepository>();
-
+            services.AddSingleton<IDaprStateEntryRepository<CustomerStateEntry>, CustomerDaprStateRepository>();
+            services.AddSingleton<IDaprStateEntryRepository<CatalogItemStateEntry>, CatalogItemDaprStateRepository>();
+            services.AddSingleton<IDaprStateEntryRepository<InventoryItemStateEntry>, InventoryItemDaprStateRepository>();
+            
             return services;
         }
     }

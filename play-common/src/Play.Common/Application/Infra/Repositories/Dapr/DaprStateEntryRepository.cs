@@ -1,6 +1,5 @@
 ﻿namespace Play.Common.Application.Infra.Repositories.Dapr
 {
-    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
@@ -21,7 +20,7 @@
             _daprClient = daprClient;
         }
 
-        public string StateStoreName { get; }
+        private string StateStoreName { get; }
 
         /// <summary>
         /// 
@@ -66,46 +65,28 @@
         private Task<IReadOnlyDictionary<string, Result<TEntry>>> InternalGetByIdAsync(IReadOnlyList<string> ids,
             CancellationToken cancellationToken = default)
         {
-            var keys = new List<(string OriginalKey, string FormattedKey)>(ids.Count);
-            var processorCount = Environment.ProcessorCount;
-
+            var keys = new List<StateItemQueryParameter<TEntry>>(ids.Count);
             for (var index = 0; index < ids.Count; index++)
             {
-                var formattedKey = KeyFormatterHelper.ConstructStateStoreKey(typeof(TEntry).Name, ids[index]);
-                keys.Add((ids[index], formattedKey));
+                keys.Add(new StateItemQueryParameter<TEntry>(ids[index]));
             }
 
-            var formattedKeys = keys.Select(x => x.FormattedKey).ToList();
-            var bulkStateItemsTask = _daprClient.GetBulkStateAsync(StateStoreName, formattedKeys,
-                parallelism: processorCount,
-                cancellationToken: cancellationToken);
-
-            var bulkStateItems = bulkStateItemsTask.IsCompletedSuccessfully
-                ? bulkStateItemsTask.Result
-                : SlowQuery(bulkStateItemsTask).Result;
-
+            var bulkStateItems = _daprClient.GetBulkStateItemsByKeys(StateStoreName, keys, cancellationToken);
             var results = new Dictionary<string, Result<TEntry>>(bulkStateItems.Count);
             foreach (var bulkStateItem in bulkStateItems)
             {
-                var entity = JsonSerializer.Deserialize<TEntry>(bulkStateItem.Value);
                 var key = keys.Single(x => x.FormattedKey == bulkStateItem.Key);
-                if (entity == null)
-                {
-                    results.Add(key.OriginalKey, Result.Failure<TEntry>(""));
+                if (bulkStateItem.CheckIfValueIsNotEmpty(results, key.OriginalKey))
                     continue;
-                }
+
+                if (bulkStateItem.TryDeserializeValue(key.OriginalKey, results, out var entity))
+                    continue;
 
                 results.Add(key.OriginalKey, Result.Success(entity));
             }
 
             return Task.FromResult<IReadOnlyDictionary<string, Result<TEntry>>>(
                 new ReadOnlyDictionary<string, Result<TEntry>>(results));
-
-            static async Task<IReadOnlyList<BulkStateItem>> SlowQuery(Task<IReadOnlyList<BulkStateItem>> queryTask)
-            {
-                var bulkStateItem = await queryTask;
-                return bulkStateItem;
-            }
         }
 
         private Task InternalUpsertAsync(IReadOnlyCollection<TEntry> entities, CancellationToken cancellationToken)

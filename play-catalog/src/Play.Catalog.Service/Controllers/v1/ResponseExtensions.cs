@@ -24,11 +24,11 @@
 
             await httpResponse.BodyWriter.CompleteAsync();
         }
-        
+
         public static async ValueTask WriteResponseAsync(this Task<Response> response, HttpResponse httpResponse)
         {
             var waitResponse = await response;
-            
+
             httpResponse.StatusCode = waitResponse.StatusCode;
             httpResponse.ContentType = MediaTypeNames.Application.Json;
 
@@ -38,7 +38,11 @@
                 await httpResponse.BodyWriter.WriteAsync(
                     new ReadOnlyMemory<byte>(JsonSerializer.SerializeToUtf8Bytes(waitResponse.ErrorResponse)));
             else
-                await httpResponse.BodyWriter.WriteAsync(waitResponse.Content.ValueAsJsonUtf8Bytes);
+            {
+                _ = waitResponse.Content.HasValue
+                    ? await httpResponse.BodyWriter.WriteAsync(waitResponse.Content.ValueAsJsonUtf8Bytes)
+                    : await httpResponse.BodyWriter.WriteAsync(new ReadOnlyMemory<byte>());
+            }
 
             await httpResponse.BodyWriter.CompleteAsync();
         }

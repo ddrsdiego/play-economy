@@ -8,6 +8,8 @@
 
     public sealed class GetCatalogItemByIdUseCase : UseCaseExecutor<GetCatalogItemByIdRequest>
     {
+        private const string ItemNotFoundError = "ITEM_NOT_FOUND";
+        
         private readonly IDaprStateEntryRepository<CatalogItemData> _entryRepository;
 
         public GetCatalogItemByIdUseCase(ILoggerFactory logger,
@@ -22,7 +24,7 @@
         {
             var catalogItemData = await _entryRepository.GetByIdAsync(request.Id, token);
             if (catalogItemData.IsFailure)
-                return Response.Fail(new Error("", ""));
+                return Response.Fail(new Error(ItemNotFoundError, $"Item not found in catalog with id {request.Id}"));
 
             var response = new GetCatalogItemByIdResponse(
                 catalogItemData.Value.CatalogItemId,

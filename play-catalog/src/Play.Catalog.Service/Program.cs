@@ -2,9 +2,7 @@ namespace Play.Catalog.Service
 {
     using System.Reflection;
     using System.Threading.Tasks;
-    using Core.Application.Infra.Repositories;
     using Core.Application.IoC;
-    using Core.Domain.AggregatesModel.CatalogItemAggregate;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
@@ -24,10 +22,7 @@ namespace Play.Catalog.Service
                 .ConfigureServices((context, services) =>
                 {
                     services.AddUseCases();
-                    
-                    services.AddSingleton<ICatalogItemRepository, CatalogItemRepository>();
                     services.AddDaprStateEntryRepositories();
-                    
                     services.AddDaprClient(configure =>
                     {
                         configure.UseHttpEndpoint("http://localhost:3100");

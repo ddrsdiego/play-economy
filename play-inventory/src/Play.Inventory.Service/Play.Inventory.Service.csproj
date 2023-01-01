@@ -10,6 +10,7 @@
 
     <ItemGroup>
       <PackageReference Include="Dapr.AspNetCore" Version="1.9.0" />
+      <PackageReference Include="Play.Common" Version="1.0.0" />
       <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     </ItemGroup>
 

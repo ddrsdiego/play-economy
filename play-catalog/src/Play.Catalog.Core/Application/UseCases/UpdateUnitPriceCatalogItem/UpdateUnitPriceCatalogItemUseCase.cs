@@ -10,18 +10,16 @@ namespace Play.Catalog.Core.Application.UseCases.UpdateUnitPriceCatalogItem
     using Infra.Repositories;
     using Microsoft.AspNetCore.Http;
 
-    public sealed class
-        UpdateUnitPriceCatalogItemUseCase : UseCaseExecutor<UpdateUnitPriceCatalogItemRequest>
+    public sealed class UpdateUnitPriceCatalogItemUseCase : UseCaseExecutor<UpdateUnitPriceCatalogItemRequest>
     {
         private readonly DaprClient _daprClient;
-        private readonly ICatalogItemRepository _catalogItemRepository;
         private readonly IDaprStateEntryRepository<CatalogItemData> _daprStateEntryRepository;
-
-        public UpdateUnitPriceCatalogItemUseCase(ILoggerFactory logger, ICatalogItemRepository catalogItemRepository,
-            DaprClient daprClient, IDaprStateEntryRepository<CatalogItemData> daprStateEntryRepository)
+        private const string ItemNotFoundError = "ITEM_NOT_FOUND";
+        
+        public UpdateUnitPriceCatalogItemUseCase(ILoggerFactory logger, DaprClient daprClient,
+            IDaprStateEntryRepository<CatalogItemData> daprStateEntryRepository)
             : base(logger.CreateLogger<UpdateUnitPriceCatalogItemUseCase>())
         {
-            _catalogItemRepository = catalogItemRepository;
             _daprClient = daprClient;
             _daprStateEntryRepository = daprStateEntryRepository;
         }
@@ -31,7 +29,7 @@ namespace Play.Catalog.Core.Application.UseCases.UpdateUnitPriceCatalogItem
         {
             var stateEntry = await _daprStateEntryRepository.GetByIdAsync(request.CatalogItemId, token);
             if (stateEntry.IsFailure)
-                return default;
+                return Response.Fail(new Error(ItemNotFoundError, $"Item not found in catalog with id {request.CatalogItemId}"));
 
             var catalogItem = stateEntry.Value.ToCatalogItem();
             var newUnitPrice = new UnitPrice(request.UnitPrice);

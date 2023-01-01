@@ -7,7 +7,7 @@
 
     public interface IDaprStateEntry
     {
-        string? Id { get; set; }
+        string Id { get; set; }
     }
 
     public interface IDaprStateEntryRepository<TEntry>
