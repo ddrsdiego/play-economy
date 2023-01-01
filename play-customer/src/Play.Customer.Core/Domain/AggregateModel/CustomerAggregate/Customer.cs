@@ -17,7 +17,7 @@
         internal Customer(string customerId, string document, string name, string email, DateTimeOffset createdAt)
         {
             Document = document;
-            Email = email;
+            Email = new Email(email);
             Identification = new CustomerIdentification(customerId, email, document);
             Name = name;
             CreatedAt = createdAt;
@@ -30,7 +30,7 @@
         public CustomerIdentification Identification { get; }
         public string Document { get; }
         public string Name { get; private set; }
-        public string Email { get; }
+        public Email Email { get; }
         public DateTimeOffset CreatedAt { get; }
 
         public void UpdateName(string name)

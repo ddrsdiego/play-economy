@@ -1,4 +1,4 @@
-namespace Play.Catalog.Core.Application.Repositories
+namespace Play.Catalog.Core.Application.Infra.Repositories
 {
     using Domain.AggregatesModel.CatalogItemAggregate;
 
@@ -8,6 +8,7 @@ namespace Play.Catalog.Core.Application.Repositories
         {
             return new CatalogItemData
             {
+                Id = catalogItem.Id,
                 CatalogItemId = catalogItem.Id,
                 CatalogItemName = catalogItem.Description.Name,
                 Description = catalogItem.Description.Value,

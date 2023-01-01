@@ -21,7 +21,7 @@ namespace Play.Customer.Core.Application.Infra.Repositories
                     CustomerId = customer.Identification.Id,
                     Document = customer.Document,
                     Name = customer.Name,
-                    Email = customer.Email,
+                    Email = customer.Email.Value,
                     CreatedAt = customer.CreatedAt
                 }
             };

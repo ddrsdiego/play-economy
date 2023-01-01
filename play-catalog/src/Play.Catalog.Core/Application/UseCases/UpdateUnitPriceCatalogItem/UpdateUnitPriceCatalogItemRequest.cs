@@ -1,4 +1,16 @@
 namespace Play.Catalog.Core.Application.UseCases.UpdateUnitPriceCatalogItem
 {
-    public record UpdateUnitPriceCatalogItemRequest(string CatalogItemId, decimal UnitPrice);
+    using Common.Application.UseCase;
+
+    public class UpdateUnitPriceCatalogItemRequest : UseCaseRequest
+    {
+        public UpdateUnitPriceCatalogItemRequest(string catalogItemId, decimal unitPrice)
+        {
+            UnitPrice = unitPrice;
+            CatalogItemId = catalogItemId;
+        }
+
+        public string CatalogItemId { get; }
+        public decimal UnitPrice { get; }
+    }
 }

@@ -9,7 +9,6 @@
     using Domain.AggregateModel.CustomerAggregate;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
-    using Microsoft.OpenApi.Models;
 
     public sealed class CustomerRepository : ICustomerRepository
     {

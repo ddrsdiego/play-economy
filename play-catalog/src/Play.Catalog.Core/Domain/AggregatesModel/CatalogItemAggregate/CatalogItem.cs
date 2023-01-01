@@ -10,7 +10,7 @@
         }
 
         public CatalogItem(decimal price, string name, string description)
-            : this(Guid.NewGuid().ToString(), price, name, description, DateTimeOffset.UtcNow)
+            : this(Guid.NewGuid().ToString().Split('-')[0], price, name, description, DateTimeOffset.UtcNow)
         {
         }
 

@@ -1,4 +1,19 @@
 ﻿namespace Play.Catalog.Core.Application.UseCases.CreateNewCatalogItem
 {
-    public record CreateNewCatalogItemRequest(decimal Price, string Name, string Description);
+    using Common.Application.UseCase;
+
+    public class CreateNewCatalogItemRequest : UseCaseRequest
+    {
+
+        public CreateNewCatalogItemRequest(decimal price, string name, string description)
+        {
+            Price = price;
+            Name = name;
+            Description = description;
+        }
+        
+        public decimal Price { get; }
+        public string Name { get; }
+        public string Description { get; }
+    }
 }

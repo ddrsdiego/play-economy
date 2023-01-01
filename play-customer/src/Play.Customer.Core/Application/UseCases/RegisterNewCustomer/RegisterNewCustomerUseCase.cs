@@ -29,7 +29,7 @@
             var newCustomer = new Customer(request.Document, request.Name, request.Email);
             await _customerRepository.UpsertAsync(newCustomer, token);
 
-            return new RegisterNewCustomerResponse(newCustomer.Identification.Id, newCustomer.Name, newCustomer.Email,
+            return new RegisterNewCustomerResponse(newCustomer.Identification.Id, newCustomer.Name, newCustomer.Email.Value,
                 newCustomer.CreatedAt);
         }
 

@@ -2,10 +2,7 @@
 {
     public readonly struct GetCustomerByIdRequest
     {
-        public GetCustomerByIdRequest(string id)
-        {
-            Id = id;
-        }
+        public GetCustomerByIdRequest(string id) => Id = id;
 
         public string Id { get; }
     }

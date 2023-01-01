@@ -1,20 +1,18 @@
 ﻿namespace Play.Catalog.Core.Application.IoC
 {
+    using Common.Application.Infra.Repositories.Dapr;
     using Dapr.Client;
-    using Domain.AggregatesModel.CatalogItemAggregate;
-    using Domain.SeedWorks;
+    using Infra.Repositories;
     using Microsoft.Extensions.DependencyInjection;
-    using Repositories;
 
     public static class DaprStateEntryRepositoryEx
     {
-        public static IServiceCollection AddDaprStateEntryRepository<T>(this IServiceCollection services,
-            string stateStoreName)
+        public static IServiceCollection AddDaprStateEntryRepositories(this IServiceCollection services)
         {
-            services.AddSingleton<IRepository<CatalogItem>>(sp =>
+            services.AddSingleton<IDaprStateEntryRepository<CatalogItemData>>(sp =>
             {
                 var daprClient = sp.GetRequiredService<DaprClient>();
-                return new DaprStateEntryRepository<CatalogItem>("play-catalog-state-store", daprClient);
+                return new CatalogItemDaprRepository(daprClient);
             });
             return services;
         }

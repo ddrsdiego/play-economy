@@ -11,7 +11,12 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Application\Infra\Clients" />
       <Folder Include="Domain\AggregatesModel" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\play-common\src\Play.Common\Play.Common.csproj" />
     </ItemGroup>
 
 </Project>

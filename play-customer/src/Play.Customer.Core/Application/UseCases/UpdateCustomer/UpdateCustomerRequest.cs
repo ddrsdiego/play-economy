@@ -35,7 +35,7 @@
 
             await _customerRepository.UpsertAsync(customer, token);
 
-            var customerUpdated = new CustomerUpdated(customer.Identification.Id, customer.Name, customer.Email);
+            var customerUpdated = new CustomerUpdated(customer.Identification.Id, customer.Name, customer.Email.Value);
 
             _ = _daprClient.PublishEventAsync("play-customer-pub-sub", Topics.CustomerUpdated,
                 customerUpdated, token);

@@ -21,7 +21,7 @@
             var customer = await _customerRepository.GetById(request.Id);
 
             var response =
-                new GetCustomerByIdResponse(customer.Identification.Id, customer.Name, customer.Email,
+                new GetCustomerByIdResponse(customer.Identification.Id, customer.Name, customer.Email.Value,
                     customer.CreatedAt);
 
             return response;

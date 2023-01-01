@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Play.Catalog.Service", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Play.Catalog.Core", "src\Play.Catalog.Core\Play.Catalog.Core.csproj", "{B19688FC-4261-4924-8DEE-1321CA8FACDC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Play.Common", "..\play-common\src\Play.Common\Play.Common.csproj", "{D64CB373-AF12-4FFF-99BE-4572B9DC7C26}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -16,6 +18,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{A11CC6FC-094D-45E5-B02E-663520FF40C8} = {34644A13-F573-4962-9E98-DFE17A05CD17}
 		{B19688FC-4261-4924-8DEE-1321CA8FACDC} = {34644A13-F573-4962-9E98-DFE17A05CD17}
+		{D64CB373-AF12-4FFF-99BE-4572B9DC7C26} = {34644A13-F573-4962-9E98-DFE17A05CD17}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A11CC6FC-094D-45E5-B02E-663520FF40C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -26,5 +29,9 @@ Global
 		{B19688FC-4261-4924-8DEE-1321CA8FACDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B19688FC-4261-4924-8DEE-1321CA8FACDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B19688FC-4261-4924-8DEE-1321CA8FACDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D64CB373-AF12-4FFF-99BE-4572B9DC7C26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D64CB373-AF12-4FFF-99BE-4572B9DC7C26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D64CB373-AF12-4FFF-99BE-4572B9DC7C26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D64CB373-AF12-4FFF-99BE-4572B9DC7C26}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

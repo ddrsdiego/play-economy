@@ -1,12 +1,13 @@
-﻿namespace Play.Catalog.Core.Application.Repositories
+﻿namespace Play.Catalog.Core.Application.Infra.Repositories
 {
+    using Common.Application.Infra.Repositories.Dapr;
     using Dapr.Client;
-    using Domain.AggregatesModel.CatalogItemAggregate;
     using Microsoft.Extensions.Logging;
+    using Domain.AggregatesModel.CatalogItemAggregate;
 
     public sealed class CatalogItemRepository : ICatalogItemRepository
     {
-        private const string StateStoreName = "play-catalog-state-store";
+        public const string StateStoreName = "play-catalog-state-store";
 
         private readonly DaprClient _daprClient;
         private readonly ILogger<CatalogItemRepository> _logger;
@@ -19,7 +20,7 @@
 
         public Task SaveOrUpdateAsync(CatalogItem catalogItem)
         {
-            var stateStoreKey = KeyFormatterHelper.CreateStateStoreKey(nameof(CatalogItem), catalogItem.Id);
+            var stateStoreKey = KeyFormatterHelper.ConstructStateStoreKey(nameof(CatalogItem), catalogItem.Id);
 
             try
             {
@@ -38,7 +39,7 @@
 
         public async Task<CatalogItem> GetByIdAsync(string? id)
         {
-            var stateStoreKey = KeyFormatterHelper.CreateStateStoreKey(nameof(CatalogItem), id);
+            var stateStoreKey = KeyFormatterHelper.ConstructStateStoreKey(nameof(CatalogItem), id);
 
             try
             {
@@ -56,8 +57,9 @@
         private static async Task SlowTask(Task task) => await task;
     }
 
-    internal class CatalogItemData
+    public class CatalogItemData : IDaprStateEntry
     {
+        public string? Id { get; set; }
         public string? CatalogItemId { get; set; }
         public string CatalogItemName { get; set; }
         public string Description { get; set; }

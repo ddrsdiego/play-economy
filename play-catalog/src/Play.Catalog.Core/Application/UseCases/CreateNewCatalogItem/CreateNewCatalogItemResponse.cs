@@ -1,5 +1,24 @@
 namespace Play.Catalog.Core.Application.UseCases.CreateNewCatalogItem
 {
-    public record CreateNewCatalogItemResponse(string Id, string Name, string Description, decimal UnitPrice,
-        DateTimeOffset CreatedAt);
+    using System.Text.Json.Serialization;
+
+    public readonly struct CreateNewCatalogItemResponse
+    {
+        [JsonConstructor]
+        public CreateNewCatalogItemResponse(string id, string name, string description, decimal unitPrice,
+            DateTimeOffset createdAt)
+        {
+            Id = id;
+            Name = name;
+            Description = description;
+            UnitPrice = unitPrice;
+            CreatedAt = createdAt;
+        }
+
+        public string Id { get; }
+        public string Name { get; }
+        public string Description { get; }
+        public decimal UnitPrice { get; }
+        public DateTimeOffset CreatedAt { get; }
+    }
 }
