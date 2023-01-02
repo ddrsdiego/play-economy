@@ -2,8 +2,8 @@
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Application;
-    using Application.UseCase;
+    using Common.Application;
+    using Common.Application.UseCase;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Logging;
 

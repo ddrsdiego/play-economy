@@ -65,10 +65,13 @@
         private Task<IReadOnlyDictionary<string, Result<TEntry>>> InternalGetByIdAsync(IReadOnlyList<string> ids,
             CancellationToken cancellationToken = default)
         {
+            if (!StateEntryNameManager.TryExtractName<TEntry>(out var stateEntryName))
+                stateEntryName = typeof(TEntry).Name;
+
             var keys = new List<StateItemQueryParameter<TEntry>>(ids.Count);
             for (var index = 0; index < ids.Count; index++)
             {
-                keys.Add(new StateItemQueryParameter<TEntry>(ids[index]));
+                keys.Add(new StateItemQueryParameter<TEntry>(stateEntryName, ids[index]));
             }
 
             var bulkStateItems = _daprClient.GetBulkStateItemsByKeys(StateStoreName, keys, cancellationToken);
@@ -92,11 +95,14 @@
         private Task InternalUpsertAsync(IReadOnlyCollection<TEntry> entities, CancellationToken cancellationToken)
         {
             var requests = new List<StateTransactionRequest>(entities.Count);
-
+            
+            if (!StateEntryNameManager.TryExtractName<TEntry>(out var stateEntryName))
+                stateEntryName = typeof(TEntry).Name;
+            
             foreach (var entity in entities)
             {
                 var value = JsonSerializer.SerializeToUtf8Bytes(entity);
-                var key = KeyFormatterHelper.ConstructStateStoreKey(typeof(TEntry).Name, entity.Id);
+                var key = KeyFormatterHelper.ConstructStateStoreKey(stateEntryName, entity.Id);
 
                 requests.Add(new StateTransactionRequest(key, value, StateOperationType.Upsert));
             }

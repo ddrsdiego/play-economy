@@ -1,13 +1,14 @@
-﻿namespace Play.Inventory.Service.Controllers
+﻿namespace Play.Inventory.Service.Controllers.v1
 {
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
     using Common.Application.UseCase;
     using Core.Application.UseCases.GetInventoryItemByUserId;
     using Core.Application.UseCases.GrantItem;
-    using Microsoft.AspNetCore.Mvc;
 
     [ApiController]
-    [Route("items")]
+    [ApiVersion("1")]
+    [Route("api/v{version:apiVersion}/items")]
     public class ItemController : ControllerBase
     {
         private readonly IUseCaseExecutor<GrantItemRequest> _grantItemUseCase;

@@ -1,15 +1,15 @@
-﻿namespace Play.Inventory.Service.Controllers
+﻿namespace Play.Inventory.Service.Controllers.v1
 {
     using System;
     using System.Threading.Tasks;
-    using Common.Application.Infra.Repositories.Dapr;
-    using Core.Application.Helpers.Constants;
-    using Core.Application.Infra.Repositories.CatalogItemRepository;
-    using Core.Application.Infra.Repositories.CustomerRepository;
-    using Core.Domain.AggregateModel.CatalogItemAggregate;
-    using Core.Domain.AggregateModel.CustomerAggregate;
     using Dapr;
     using Microsoft.AspNetCore.Mvc;
+    using Play.Common.Application.Infra.Repositories.Dapr;
+    using Play.Inventory.Core.Application.Helpers.Constants;
+    using Play.Inventory.Core.Application.Infra.Repositories.CatalogItemRepository;
+    using Play.Inventory.Core.Application.Infra.Repositories.CustomerRepository;
+    using Play.Inventory.Core.Domain.AggregateModel.CatalogItemAggregate;
+    using Play.Inventory.Core.Domain.AggregateModel.CustomerAggregate;
 
     public record CatalogItemCreated(string CatalogItemId, string Name, string Description);
 

@@ -5,6 +5,7 @@ namespace Play.Inventory.Service
     using System.Threading.Tasks;
     using Core.Application.IoC;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
@@ -24,6 +25,11 @@ namespace Play.Inventory.Service
                 .ConfigureServices((context, services) =>
                 {
                     services.AddControllers();
+                    services.AddApiVersioning(options =>
+                    {
+                        options.DefaultApiVersion = new ApiVersion(1, 0);
+                        options.AssumeDefaultVersionWhenUnspecified = true;
+                    });
                     services.AddPlayInventoryServices(Configuration);
                 });
 

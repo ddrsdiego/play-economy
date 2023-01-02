@@ -2,6 +2,7 @@
 {
     using Play.Common.Application.Infra.Repositories.Dapr;
 
+    [StateEntryName("inventory-item")]
     public class InventoryItemData : IDaprStateEntry
     {
         public string Id { get; set; }

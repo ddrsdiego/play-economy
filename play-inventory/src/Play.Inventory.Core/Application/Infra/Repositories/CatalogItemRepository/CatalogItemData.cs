@@ -2,6 +2,7 @@
 {
     using Common.Application.Infra.Repositories.Dapr;
 
+    [StateEntryName("catalog-item")]
     public class CatalogItemData : IDaprStateEntry
     {
         public string Id { get; set; }

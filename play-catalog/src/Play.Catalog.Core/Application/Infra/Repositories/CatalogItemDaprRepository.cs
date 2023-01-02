@@ -3,6 +3,7 @@
     using Common.Application.Infra.Repositories.Dapr;
     using Dapr.Client;
 
+    [StateEntryName("catalog-item")]
     public class CatalogItemData : IDaprStateEntry
     {
         public const string StateStoreName = "play-catalog-state-store";
