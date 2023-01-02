@@ -4,7 +4,6 @@
     using System.Threading.Tasks;
     using Common.Application.Infra.Repositories.Dapr;
     using Core.Application.Helpers.Constants;
-    using Core.Application.Infra.Repositories;
     using Core.Application.Infra.Repositories.CatalogItemRepository;
     using Core.Application.Infra.Repositories.CustomerRepository;
     using Core.Domain.AggregateModel.CatalogItemAggregate;
@@ -24,11 +23,11 @@
     [Route("/")]
     public class SubscribeController : ControllerBase
     {
-        private readonly IDaprStateEntryRepository<CustomerStateEntry> _customerDaprRepository;
-        private readonly IDaprStateEntryRepository<CatalogItemStateEntry> _catalogItemDaprRepository;
+        private readonly IDaprStateEntryRepository<CustomerData> _customerDaprRepository;
+        private readonly IDaprStateEntryRepository<CatalogItemData> _catalogItemDaprRepository;
 
-        public SubscribeController(IDaprStateEntryRepository<CatalogItemStateEntry> catalogItemDaprRepository,
-            IDaprStateEntryRepository<CustomerStateEntry> customerDaprRepository)
+        public SubscribeController(IDaprStateEntryRepository<CatalogItemData> catalogItemDaprRepository,
+            IDaprStateEntryRepository<CustomerData> customerDaprRepository)
         {
             _catalogItemDaprRepository = catalogItemDaprRepository;
             _customerDaprRepository = customerDaprRepository;
@@ -52,12 +51,12 @@
         public async Task<IActionResult> SubscriberToCatalogItemUpdatedAsync(
             [FromBody] CatalogItemUpdated catalogItemUpdated)
         {
-            CatalogItemStateEntry catalogItemStateEntry;
+            CatalogItemData catalogItemData;
 
             var catalogItemDataResult = await _catalogItemDaprRepository.GetByIdAsync(catalogItemUpdated.CatalogItemId);
             if (catalogItemDataResult.IsFailure)
             {
-                catalogItemStateEntry = new CatalogItemStateEntry
+                catalogItemData = new CatalogItemData
                 {
                     Id = catalogItemUpdated.CatalogItemId,
                     CatalogItemId = catalogItemUpdated.CatalogItemId,
@@ -68,7 +67,7 @@
             }
             else
             {
-                catalogItemStateEntry = new CatalogItemStateEntry
+                catalogItemData = new CatalogItemData
                 {
                     Id = catalogItemUpdated.CatalogItemId,
                     CatalogItemId = catalogItemDataResult.Value.CatalogItemId,
@@ -78,7 +77,7 @@
                 };
             }
 
-            await _catalogItemDaprRepository.UpsertAsync(catalogItemStateEntry);
+            await _catalogItemDaprRepository.UpsertAsync(catalogItemData);
 
             return Ok();
         }

@@ -1,7 +1,6 @@
 ﻿namespace Play.Inventory.Core.Application.IoC
 {
     using Common.Application.Infra.Repositories.Dapr;
-    using Infra.Repositories;
     using Infra.Repositories.CatalogItemRepository;
     using Infra.Repositories.CustomerRepository;
     using Infra.Repositories.InventoryItemRepository;
@@ -11,9 +10,9 @@
     {
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
-            services.AddSingleton<IDaprStateEntryRepository<CustomerStateEntry>, CustomerDaprStateRepository>();
-            services.AddSingleton<IDaprStateEntryRepository<CatalogItemStateEntry>, CatalogItemDaprStateRepository>();
-            services.AddSingleton<IDaprStateEntryRepository<InventoryItemStateEntry>, InventoryItemDaprStateRepository>();
+            services.AddSingleton<IDaprStateEntryRepository<CustomerData>, CustomerDaprStateRepository>();
+            services.AddSingleton<IDaprStateEntryRepository<CatalogItemData>, CatalogItemDaprStateRepository>();
+            services.AddSingleton<IDaprStateEntryRepository<InventoryItemData>, InventoryItemDaprStateRepository>();
             
             return services;
         }

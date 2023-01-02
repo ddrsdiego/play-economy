@@ -5,18 +5,18 @@
     using Common.Application.UseCase;
     using Domain.AggregateModel.InventoryItemAggregate;
     using GetCustomerById;
-    using Infra.Repositories;
     using Infra.Repositories.CustomerRepository;
     using Infra.Repositories.InventoryItemRepository;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Logging;
 
     public sealed class GrantItemUseCase : UseCaseExecutor<GrantItemRequest>
     {
         private readonly IUseCaseExecutor<GetCustomerByIdRequest> _getCustomerByIdUseCase;
-        private readonly IDaprStateEntryRepository<InventoryItemStateEntry> _inventoryRepository;
+        private readonly IDaprStateEntryRepository<InventoryItemData> _inventoryRepository;
 
         public GrantItemUseCase(ILoggerFactory logger,
-            IDaprStateEntryRepository<InventoryItemStateEntry> inventoryRepository,
+            IDaprStateEntryRepository<InventoryItemData> inventoryRepository,
             IUseCaseExecutor<GetCustomerByIdRequest> getCustomerByIdUseCase)
             : base(logger.CreateLogger<GrantItemUseCase>())
         {
@@ -31,7 +31,7 @@
             if (customerResponse.IsFailure)
                 return Response.Fail(new Error("CUSTOMER_NOT_FOUND", "Customer not found"));
             
-            var customerStateEntry = customerResponse.Content.GetRaw<CustomerStateEntry>();
+            var customerStateEntry = customerResponse.Content.GetRaw<CustomerData>();
             var inventoryResult = await _inventoryRepository.GetByIdAsync(customerStateEntry.CustomerId, token);
 
             var inventoryItem = inventoryResult.IsFailure ? 
@@ -43,7 +43,7 @@
             
             await _inventoryRepository.UpsertAsync(inventoryItemData, token);
 
-            return Response.Ok();
+            return Response.Ok(StatusCodes.Status201Created);
         }
     }
 }

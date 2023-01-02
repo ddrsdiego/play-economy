@@ -1,7 +1,11 @@
 ﻿namespace Play.Inventory.Core.Application.Responses
 {
-    public sealed record GetInventoryItemByUserIdResponse(string Name, string Email,
-        IEnumerable<GetInventoryItemLineResponse> Items);
+    public class GetInventoryItemByUserIdResponse
+    {
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public IEnumerable<GetInventoryItemLineResponse> Items { get; set; }
+    }
 
     public sealed record GetInventoryItemLineResponse(string CatalogItemId, string Name, string Description,
         int Quantity, DateTimeOffset AcquiredAt);

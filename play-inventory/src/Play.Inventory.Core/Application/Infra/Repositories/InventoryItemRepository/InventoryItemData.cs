@@ -2,7 +2,7 @@
 {
     using Play.Common.Application.Infra.Repositories.Dapr;
 
-    public class InventoryItemStateEntry : IDaprStateEntry
+    public class InventoryItemData : IDaprStateEntry
     {
         public string Id { get; set; }
         public string UserId { get; set; }

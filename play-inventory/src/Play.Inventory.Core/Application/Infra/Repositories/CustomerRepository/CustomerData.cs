@@ -2,7 +2,7 @@
 {
     using Common.Application.Infra.Repositories.Dapr;
 
-    public sealed class CustomerStateEntry : IDaprStateEntry
+    public sealed class CustomerData : IDaprStateEntry
     {
         public string Id { get; set; }
         public string CustomerId { get; set; }

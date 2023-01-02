@@ -3,6 +3,7 @@
     using Common.Application.UseCase;
     using Microsoft.Extensions.DependencyInjection;
     using UseCases.GetCustomerById;
+    using UseCases.GetInventoryItemByUserId;
     using UseCases.GrantItem;
 
     public static class UseCasesContainer
@@ -11,6 +12,8 @@
         {
             services.AddTransient<IUseCaseExecutor<GrantItemRequest>, GrantItemUseCase>();
             services.AddTransient<IUseCaseExecutor<GetCustomerByIdRequest>, GetCustomerByIdUseCase>();
+            services.AddTransient<IUseCaseExecutor<GetInventoryItemByUserIdReq>, GetInventoryItemByUserIdUseCase>();
+            
             return services;
         }
     }

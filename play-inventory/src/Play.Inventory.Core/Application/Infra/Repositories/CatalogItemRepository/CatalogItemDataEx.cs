@@ -4,9 +4,9 @@
 
     public static class CatalogItemDataEx
     {
-        public static CatalogItemStateEntry ToCatalogItem(this CatalogItem catalogItem)
+        public static CatalogItemData ToCatalogItem(this CatalogItem catalogItem)
         {
-            return new CatalogItemStateEntry
+            return new CatalogItemData
             {
                 CatalogItemId = catalogItem.CatalogItemId,
                 Description = catalogItem.Description,
@@ -15,10 +15,10 @@
             };
         }
 
-        public static CatalogItem ToStateEntry(this CatalogItemStateEntry catalogItemStateEntry)
+        public static CatalogItem ToStateEntry(this CatalogItemData catalogItemData)
         {
-            var catalogItem = new CatalogItem(catalogItemStateEntry.CatalogItemId, catalogItemStateEntry.Name,
-                catalogItemStateEntry.Description, catalogItemStateEntry.CreatedAt);
+            var catalogItem = new CatalogItem(catalogItemData.CatalogItemId, catalogItemData.Name,
+                catalogItemData.Description, catalogItemData.CreatedAt);
 
             return catalogItem;
         }

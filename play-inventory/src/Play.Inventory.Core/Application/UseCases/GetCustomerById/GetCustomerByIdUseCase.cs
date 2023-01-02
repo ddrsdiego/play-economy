@@ -5,7 +5,6 @@
     using Common.Application.UseCase;
     using Domain.AggregateModel.CustomerAggregate;
     using Infra.Clients;
-    using Infra.Repositories;
     using Infra.Repositories.CustomerRepository;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Logging;
@@ -13,10 +12,10 @@
     public sealed class GetCustomerByIdUseCase : UseCaseExecutor<GetCustomerByIdRequest>
     {
         private readonly ICustomerClient _customerClient;
-        private readonly IDaprStateEntryRepository<CustomerStateEntry> _customerRepository;
+        private readonly IDaprStateEntryRepository<CustomerData> _customerRepository;
 
         public GetCustomerByIdUseCase(ILoggerFactory logger,
-            IDaprStateEntryRepository<CustomerStateEntry> customerRepository,
+            IDaprStateEntryRepository<CustomerData> customerRepository,
             ICustomerClient customerClient)
             : base(logger.CreateLogger<GetCustomerByIdUseCase>())
         {

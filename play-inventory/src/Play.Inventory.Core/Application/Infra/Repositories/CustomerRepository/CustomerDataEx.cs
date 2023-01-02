@@ -4,9 +4,9 @@
 
     public static class CustomerDataEx
     {
-        public static CustomerStateEntry ToStateEntry(this Customer customer)
+        public static CustomerData ToStateEntry(this Customer customer)
         {
-            return new CustomerStateEntry
+            return new CustomerData
             {
                 Id = customer.CustomerId,
                 CustomerId = customer.CustomerId,
@@ -16,9 +16,9 @@
             };
         }
 
-        public static Customer ToCustomer(this CustomerStateEntry stateEntry)
+        public static Customer ToCustomer(this CustomerData data)
         {
-            return new Customer(stateEntry.CustomerId, stateEntry.Name, stateEntry.Email, stateEntry.CreatedAt);
+            return new Customer(data.CustomerId, data.Name, data.Email, data.CreatedAt);
         }
     }
 }
