@@ -4,7 +4,7 @@
 
     public static class CatalogItemDataEx
     {
-        public static CatalogItemData ToCatalogItem(this CatalogItem catalogItem)
+        public static CatalogItemData ToCatalogItemData(this CatalogItem? catalogItem)
         {
             return new CatalogItemData
             {

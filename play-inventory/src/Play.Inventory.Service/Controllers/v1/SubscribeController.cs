@@ -1,15 +1,16 @@
 ﻿namespace Play.Inventory.Service.Controllers.v1
 {
-    using System;
     using System.Threading.Tasks;
+    using Common.Application.UseCase;
     using Dapr;
     using Microsoft.AspNetCore.Mvc;
     using Play.Common.Application.Infra.Repositories.Dapr;
-    using Play.Inventory.Core.Application.Helpers.Constants;
-    using Play.Inventory.Core.Application.Infra.Repositories.CatalogItemRepository;
-    using Play.Inventory.Core.Application.Infra.Repositories.CustomerRepository;
-    using Play.Inventory.Core.Domain.AggregateModel.CatalogItemAggregate;
-    using Play.Inventory.Core.Domain.AggregateModel.CustomerAggregate;
+    using Core.Application.Helpers.Constants;
+    using Core.Application.Infra.Repositories.CatalogItemRepository;
+    using Core.Application.Infra.Repositories.CustomerRepository;
+    using Core.Application.UseCases.CreateCatalogItem;
+    using Core.Domain.AggregateModel.CatalogItemAggregate;
+    using Core.Domain.AggregateModel.CustomerAggregate;
 
     public record CatalogItemCreated(string CatalogItemId, string Name, string Description);
 
@@ -23,14 +24,17 @@
     [Route("/")]
     public class SubscribeController : ControllerBase
     {
+        private readonly IUseCaseExecutor<CreateCatalogItemReq> _createCatalogItemUseCase;
         private readonly IDaprStateEntryRepository<CustomerData> _customerDaprRepository;
         private readonly IDaprStateEntryRepository<CatalogItemData> _catalogItemDaprRepository;
 
         public SubscribeController(IDaprStateEntryRepository<CatalogItemData> catalogItemDaprRepository,
-            IDaprStateEntryRepository<CustomerData> customerDaprRepository)
+            IDaprStateEntryRepository<CustomerData> customerDaprRepository,
+            IUseCaseExecutor<CreateCatalogItemReq> createCatalogItemUseCase)
         {
             _catalogItemDaprRepository = catalogItemDaprRepository;
             _customerDaprRepository = customerDaprRepository;
+            _createCatalogItemUseCase = createCatalogItemUseCase;
         }
 
         [Topic("play-inventory-pub-sub", Topics.CatalogItemCreated)]
@@ -41,45 +45,22 @@
             var newCatalogItem = new CatalogItem(catalogItemCreated.CatalogItemId, catalogItemCreated.Name,
                 catalogItemCreated.Description);
 
-            await _catalogItemDaprRepository.UpsertAsync(newCatalogItem.ToCatalogItem());
+            await _catalogItemDaprRepository.UpsertAsync(newCatalogItem.ToCatalogItemData());
 
             return Ok();
         }
 
         [Topic("play-inventory-pub-sub", Topics.CatalogItemUpdated)]
         [HttpPost(Topics.CatalogItemUpdated)]
-        public async Task<IActionResult> SubscriberToCatalogItemUpdatedAsync(
+        public ValueTask SubscriberToCatalogItemUpdatedAsync(
             [FromBody] CatalogItemUpdated catalogItemUpdated)
         {
-            CatalogItemData catalogItemData;
-
-            var catalogItemDataResult = await _catalogItemDaprRepository.GetByIdAsync(catalogItemUpdated.CatalogItemId);
-            if (catalogItemDataResult.IsFailure)
-            {
-                catalogItemData = new CatalogItemData
-                {
-                    Id = catalogItemUpdated.CatalogItemId,
-                    CatalogItemId = catalogItemUpdated.CatalogItemId,
-                    Name = catalogItemUpdated.Name,
-                    Description = catalogItemUpdated.Description,
-                    CreatedAt = DateTimeOffset.UtcNow
-                };
-            }
-            else
-            {
-                catalogItemData = new CatalogItemData
-                {
-                    Id = catalogItemUpdated.CatalogItemId,
-                    CatalogItemId = catalogItemDataResult.Value.CatalogItemId,
-                    Name = catalogItemDataResult.Value.Name,
-                    Description = catalogItemDataResult.Value.Description,
-                    Updated = DateTimeOffset.UtcNow
-                };
-            }
-
-            await _catalogItemDaprRepository.UpsertAsync(catalogItemData);
-
-            return Ok();
+            var response = _createCatalogItemUseCase.SendAsync(new CreateCatalogItemReq(
+                catalogItemUpdated.CatalogItemId,
+                catalogItemUpdated.Name,
+                catalogItemUpdated.Description
+            ));
+            return response.WriteResponseAsync(Response);
         }
 
         [Topic("play-inventory-pub-sub", Topics.CustomerUpdated)]
