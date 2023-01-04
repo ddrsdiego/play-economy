@@ -1,6 +1,8 @@
 ﻿namespace Play.Customer.Core.Application.UseCases.GetCustomerById
 {
-    public readonly struct GetCustomerByIdRequest
+    using Common.Application.UseCase;
+
+    public sealed class GetCustomerByIdRequest : UseCaseRequest
     {
         public GetCustomerByIdRequest(string id) => Id = id;
 

@@ -8,11 +8,8 @@
 
         internal static readonly string FullNameStateEntryNameAttribute = typeof(StateEntryNameAttribute).FullName;
 
-        public StateEntryNameAttribute(string name)
-        {
-            Name = name;
-        }
+        public StateEntryNameAttribute(string name) => Name = name.ToLowerInvariant();
 
-        public string Name { get; }
+        public readonly string Name;
     }
 }

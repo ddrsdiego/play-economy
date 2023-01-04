@@ -8,7 +8,6 @@
         public static IServiceCollection AddPlayInventoryServices(this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.AddDapr();
             services.AddUseCases();
             services.AddSwagger();
             services.AddHttpClients();

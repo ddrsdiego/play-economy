@@ -17,7 +17,8 @@
         private byte[] ContentAsJsonUtf8Bytes { get; set; }
         private JsonSerializerOptions? JsonSerializerOptions { get; }
 
-        private ResponseContent(byte[] contentAsJsonByte, string contentAsJsonString, Type inputType, SerializerOptions serializerOptions)
+        private ResponseContent(byte[] contentAsJsonByte, string contentAsJsonString, Type inputType,
+            SerializerOptions serializerOptions)
         {
             InputType = inputType;
             ContentAsJsonUtf8Bytes = contentAsJsonByte;
@@ -31,7 +32,7 @@
         /// <typeparam name="TContent"></typeparam>
         /// <param name="contentData"></param>
         /// <returns></returns>
-        public static ResponseContent Create<TContent>(TContent contentData) where TContent : new()
+        public static ResponseContent Create<TContent>(TContent contentData)
         {
             var serializerOptions = new SerializerOptions();
             serializerOptions
@@ -50,11 +51,11 @@
         /// <param name="contentData"></param>
         /// <param name="serializerOptions"></param>
         /// <returns></returns>
-        public static ResponseContent Create<TContent>(TContent contentData, SerializerOptions serializerOptions = null) where TContent : new()
+        public static ResponseContent Create<TContent>(TContent contentData, SerializerOptions serializerOptions = null)
         {
-            var contentAsJsonString = serializerOptions == null ?
-                JsonSerializer.Serialize(contentData) :
-                JsonSerializer.Serialize(contentData, serializerOptions.GetOptions());
+            var contentAsJsonString = serializerOptions == null
+                ? JsonSerializer.Serialize(contentData)
+                : JsonSerializer.Serialize(contentData, serializerOptions.GetOptions());
 
             return new ResponseContent(null, contentAsJsonString, contentData.GetType(), serializerOptions);
         }
@@ -106,7 +107,7 @@
         /// </summary>
         /// <typeparam name="TContent"></typeparam>
         /// <returns></returns>
-        public TContent GetRaw<TContent>() => (TContent)GetRaw(typeof(TContent));
+        public TContent GetRaw<TContent>() => (TContent) GetRaw(typeof(TContent));
 
         /// <summary>
         /// Obtains the deserialized content using the type passed by parameter
@@ -127,9 +128,9 @@
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                if (ContentAsJsonUtf8Bytes is { }) 
+                if (ContentAsJsonUtf8Bytes is { })
                     return ContentAsJsonUtf8Bytes;
-                
+
                 var value = JsonSerializer.Deserialize(ValueAsJsonString, InputType, JsonSerializerOptions);
                 ContentAsJsonUtf8Bytes = JsonSerializer.SerializeToUtf8Bytes(value, JsonSerializerOptions);
                 return ContentAsJsonUtf8Bytes;

@@ -11,10 +11,7 @@ namespace Play.Catalog.Service
 
     public abstract class Program
     {
-        public static async Task Main(string[] args)
-        {
-            await CreateHostBuilder(args).Build().RunAsync();
-        }
+        public static async Task Main(string[] args) => await CreateHostBuilder(args).Build().RunAsync();
 
         private static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
@@ -23,11 +20,7 @@ namespace Play.Catalog.Service
                 {
                     services.AddUseCases();
                     services.AddDaprStateEntryRepositories();
-                    services.AddDaprClient(configure =>
-                    {
-                        configure.UseHttpEndpoint("http://localhost:3100");
-                        configure.UseGrpcEndpoint("http://localhost:53100");
-                    });
+                    services.AddDaprClient();
                     services.AddControllers(options => options.SuppressAsyncSuffixInActionNames = false);
                     services.AddApiVersioning(options =>
                     {

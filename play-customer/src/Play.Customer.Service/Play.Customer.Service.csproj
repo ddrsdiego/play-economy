@@ -2,6 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
@@ -11,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Play.Customer.UnitTest\Play.Customer.UnitTest.csproj" />
       <ProjectReference Include="..\Play.Customer.Core\Play.Customer.Core.csproj" />
     </ItemGroup>
 

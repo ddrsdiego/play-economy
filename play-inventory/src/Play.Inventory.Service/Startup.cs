@@ -6,6 +6,7 @@ namespace Play.Inventory.Service
     using Microsoft.Extensions.Hosting;
     
     using System.Reflection;
+    using Subscribers;
 
     public class Startup
     {
@@ -32,8 +33,11 @@ namespace Play.Inventory.Service
             app.UseCloudEvents();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapSubscribeHandler();
                 endpoints.MapControllers();
+                endpoints.HandleCustomerUpdated();
+                endpoints.HandleCatalogItemUpdated();
+                endpoints.MapSubscribeHandler();
+                
             });
         }
     }

@@ -24,6 +24,7 @@ namespace Play.Inventory.Service
                 .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); })
                 .ConfigureServices((context, services) =>
                 {
+                    services.AddDaprClient();
                     services.AddControllers();
                     services.AddApiVersioning(options =>
                     {

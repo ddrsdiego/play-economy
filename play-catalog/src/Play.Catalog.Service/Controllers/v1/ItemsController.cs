@@ -1,6 +1,7 @@
 ﻿namespace Play.Catalog.Service.Controllers.v1
 {
     using System.Threading.Tasks;
+    using Common.Application;
     using Common.Application.UseCase;
     using Core.Application.Requests;
     using Core.Application.UseCases.CreateNewCatalogItem;

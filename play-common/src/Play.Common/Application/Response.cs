@@ -267,5 +267,10 @@
         private bool VerifyResponseIsSuccess()
             => EqualityComparer<ErrorResponse>.Default.Equals(ErrorResponse, default) ||
                EqualityComparer<Error>.Default.Equals(ErrorResponse.Error, default);
+
+        public static Response Fail(string errorCode, string errorMessage) => Fail(new Error(errorCode, errorMessage));
+
+        public static Response Fail(string errorCode, string errorMessage, string requestId) =>
+            Fail(new Error(errorCode, errorMessage), requestId);
     }
 }

@@ -102,7 +102,7 @@
             foreach (var entity in entities)
             {
                 var value = JsonSerializer.SerializeToUtf8Bytes(entity);
-                var key = KeyFormatterHelper.ConstructStateStoreKey(stateEntryName, entity.Id);
+                var key = KeyFormatterHelper.ConstructStateStoreKey(stateEntryName, entity.StateEntryKey);
 
                 requests.Add(new StateTransactionRequest(key, value, StateOperationType.Upsert));
             }

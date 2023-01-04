@@ -6,6 +6,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Play.Customer.Core", "src\P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Play.Customer.Service", "src\Play.Customer.Service\Play.Customer.Service.csproj", "{AD8F8074-BBCD-48B3-AD9A-028AABACB09A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{EDE045C9-F885-4916-B284-5507E9D06894}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Play.Customer.UnitTest", "Play.Customer.UnitTest\Play.Customer.UnitTest.csproj", "{C62D5015-EEF5-496A-8898-19C494A3A989}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Play.Common", "..\play-common\src\Play.Common\Play.Common.csproj", "{5D460D69-70B1-45C8-A673-BD5ED9341A78}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,6 +20,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{13B7A096-C6D8-49C3-80A7-2555D56E121C} = {248F036A-A7DE-4CB4-AEAC-59F6B2646C87}
 		{AD8F8074-BBCD-48B3-AD9A-028AABACB09A} = {248F036A-A7DE-4CB4-AEAC-59F6B2646C87}
+		{C62D5015-EEF5-496A-8898-19C494A3A989} = {EDE045C9-F885-4916-B284-5507E9D06894}
+		{5D460D69-70B1-45C8-A673-BD5ED9341A78} = {248F036A-A7DE-4CB4-AEAC-59F6B2646C87}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{13B7A096-C6D8-49C3-80A7-2555D56E121C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -24,5 +32,13 @@ Global
 		{AD8F8074-BBCD-48B3-AD9A-028AABACB09A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD8F8074-BBCD-48B3-AD9A-028AABACB09A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD8F8074-BBCD-48B3-AD9A-028AABACB09A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C62D5015-EEF5-496A-8898-19C494A3A989}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C62D5015-EEF5-496A-8898-19C494A3A989}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C62D5015-EEF5-496A-8898-19C494A3A989}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C62D5015-EEF5-496A-8898-19C494A3A989}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D460D69-70B1-45C8-A673-BD5ED9341A78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D460D69-70B1-45C8-A673-BD5ED9341A78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D460D69-70B1-45C8-A673-BD5ED9341A78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D460D69-70B1-45C8-A673-BD5ED9341A78}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

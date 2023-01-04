@@ -2,7 +2,7 @@
 {
     public class CreateItemRequest
     {
-        public CreateItemRequest(string name, string description, decimal price, DateTimeOffset createdAt)
+        public CreateItemRequest(string? name, string? description, decimal price, DateTimeOffset createdAt)
         {
             Name = name;
             Description = description;
@@ -10,8 +10,8 @@
             CreatedAt = createdAt;
         }
         
-        public string Name { get; }
-        public string Description { get; }
+        public string? Name { get; }
+        public string? Description { get; }
         public decimal Price { get; }
         public DateTimeOffset CreatedAt { get; }
     }

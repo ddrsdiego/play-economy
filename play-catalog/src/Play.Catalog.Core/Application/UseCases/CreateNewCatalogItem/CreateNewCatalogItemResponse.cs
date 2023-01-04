@@ -5,7 +5,7 @@ namespace Play.Catalog.Core.Application.UseCases.CreateNewCatalogItem
     public readonly struct CreateNewCatalogItemResponse
     {
         [JsonConstructor]
-        public CreateNewCatalogItemResponse(string id, string name, string description, decimal unitPrice,
+        public CreateNewCatalogItemResponse(string id, string? name, string? description, decimal unitPrice,
             DateTimeOffset createdAt)
         {
             Id = id;
@@ -16,8 +16,8 @@ namespace Play.Catalog.Core.Application.UseCases.CreateNewCatalogItem
         }
 
         public string Id { get; }
-        public string Name { get; }
-        public string Description { get; }
+        public string? Name { get; }
+        public string? Description { get; }
         public decimal UnitPrice { get; }
         public DateTimeOffset CreatedAt { get; }
     }

@@ -6,9 +6,8 @@ namespace Play.Catalog.Core.Application.Infra.Repositories
     {
         public static CatalogItemData ToCatalogItemData(this CatalogItem catalogItem)
         {
-            return new CatalogItemData
+            return new CatalogItemData(catalogItem.Id)
             {
-                Id = catalogItem.Id,
                 CatalogItemId = catalogItem.Id,
                 CatalogItemName = catalogItem.Description.Name,
                 Description = catalogItem.Description.Value,

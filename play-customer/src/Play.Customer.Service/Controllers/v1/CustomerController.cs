@@ -1,27 +1,26 @@
 ﻿namespace Play.Customer.Service.Controllers.v1
 {
     using System.Threading.Tasks;
+    using Common.Application;
+    using Common.Application.UseCase;
     using Microsoft.AspNetCore.Mvc;
-    using Core.Application.UseCases;
     using Core.Application.UseCases.GetCustomerById;
     using Core.Application.UseCases.RegisterNewCustomer;
     using Core.Application.UseCases.UpdateCustomer;
+    using Google.Protobuf.WellKnownTypes;
 
     [ApiController]
     [ApiVersion("1")]
     [Route("api/v{version:apiVersion}/customers")]
     public class CustomerController : ControllerBase
     {
-        private readonly IUseCaseExecutor<RegisterNewCustomerRequest, RegisterNewCustomerResponse>
-            _registerNewCustomerUseCase;
+        private readonly IUseCaseExecutor<UpdateCustomerRequest> _updateCustomerUseCase;
+        private readonly IUseCaseExecutor<GetCustomerByIdRequest> _getCustomerByIdUseCase;
+        private readonly IUseCaseExecutor<RegisterNewCustomerRequest> _registerNewCustomerUseCase;
 
-        private readonly IUseCaseExecutor<UpdateCustomerRequest, UpdateCustomerResponse> _updateCustomerUseCase;
-        private readonly IUseCaseExecutor<GetCustomerByIdRequest, GetCustomerByIdResponse> _getCustomerByIdUseCase;
-
-        public CustomerController(
-            IUseCaseExecutor<RegisterNewCustomerRequest, RegisterNewCustomerResponse> registerNewCustomerUseCase,
-            IUseCaseExecutor<UpdateCustomerRequest, UpdateCustomerResponse> updateCustomerUseCase,
-            IUseCaseExecutor<GetCustomerByIdRequest, GetCustomerByIdResponse> getCustomerByIdUseCase)
+        public CustomerController(IUseCaseExecutor<RegisterNewCustomerRequest> registerNewCustomerUseCase,
+            IUseCaseExecutor<UpdateCustomerRequest> updateCustomerUseCase,
+            IUseCaseExecutor<GetCustomerByIdRequest> getCustomerByIdUseCase)
         {
             _registerNewCustomerUseCase = registerNewCustomerUseCase;
             _updateCustomerUseCase = updateCustomerUseCase;
@@ -29,10 +28,10 @@
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(string id)
+        public ValueTask GetById(string id)
         {
-            var response = await _getCustomerByIdUseCase.SendAsync(new GetCustomerByIdRequest(id));
-            return Ok(response);
+            var responseTask = _getCustomerByIdUseCase.SendAsync(new GetCustomerByIdRequest(id));
+            return responseTask.WriteResponseAsync(Response);
         }
 
         [HttpPost]
@@ -40,7 +39,11 @@
         {
             var response = await _registerNewCustomerUseCase.SendAsync(request);
 
-            return CreatedAtAction(nameof(GetById), new {id = response.CustomerId}, response);
+            var registerResponse = response.Content.GetRaw<RegisterNewCustomerResponse>();
+            return CreatedAtAction(nameof(GetById), new
+            {
+                id = registerResponse.CustomerId
+            }, response);
         }
 
         [HttpPut("{id}")]
@@ -48,7 +51,7 @@
         {
             var response =
                 await _updateCustomerUseCase.SendAsync(new UpdateCustomerRequest(id, request.Name));
-            
+
             return NoContent();
         }
 

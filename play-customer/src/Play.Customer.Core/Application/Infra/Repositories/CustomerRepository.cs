@@ -61,18 +61,37 @@
             {
                 var data = customer.ToCustomerData();
 
-                var requests = new List<StateTransactionRequest>(4)
+                var reqs = new Dictionary<string, Task?>(4)
                 {
-                    new(key, JsonSerializer.SerializeToUtf8Bytes(data), StateOperationType.Upsert),
-                    new(emailKey, JsonSerializer.SerializeToUtf8Bytes(data), StateOperationType.Upsert),
-                    new(customerIdKey, JsonSerializer.SerializeToUtf8Bytes(data), StateOperationType.Upsert),
-                    new(documentKey, JsonSerializer.SerializeToUtf8Bytes(data), StateOperationType.Upsert)
+                    {
+                        key, _daprClient.SaveStateAsync(_appSettings.DaprSettings.StateStoreName, key, data,
+                            cancellationToken: cancellationToken)
+                    },
+                    {
+                        emailKey, _daprClient.SaveStateAsync(_appSettings.DaprSettings.StateStoreName, emailKey, data,
+                            cancellationToken: cancellationToken)
+                    },
+                    {
+                        customerIdKey, _daprClient.SaveStateAsync(_appSettings.DaprSettings.StateStoreName,
+                            customerIdKey, data,
+                            cancellationToken: cancellationToken)
+                    },
+                    {
+                        documentKey, _daprClient.SaveStateAsync(_appSettings.DaprSettings.StateStoreName, documentKey,
+                            data,
+                            cancellationToken: cancellationToken)
+                    }
                 };
 
-                var task = _daprClient.ExecuteStateTransactionAsync(_appSettings.DaprSettings.StateStoreName, requests,
-                    cancellationToken: cancellationToken);
+                foreach (var red in reqs)
+                {
+                    if (red.Value is {IsCompletedSuccessfully: false})
+                        continue;
 
-                return task.IsCompletedSuccessfully ? Task.CompletedTask : SlowExecute(task);
+                    _ = SlowExecute(red.Value);
+                }
+
+                return Task.CompletedTask;
             }
             catch (Exception e)
             {

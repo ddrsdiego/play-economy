@@ -1,13 +1,25 @@
 ﻿namespace Play.Common.Application.Infra.Repositories.Dapr
 {
     using System.Collections.Generic;
+    using System.Text.Json.Serialization;
     using System.Threading;
     using System.Threading.Tasks;
     using CSharpFunctionalExtensions;
 
     public interface IDaprStateEntry
     {
-        string Id { get; set; }
+        string StateEntryKey { get; }
+    }
+
+    public abstract class DaprStateEntry : IDaprStateEntry
+    {
+        
+        protected DaprStateEntry(string stateEntryKey)
+        {
+            StateEntryKey = stateEntryKey;
+        }
+
+        public string StateEntryKey { get; protected set; }
     }
 
     public interface IDaprStateEntryRepository<TEntry>

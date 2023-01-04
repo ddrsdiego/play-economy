@@ -1,13 +1,12 @@
-﻿namespace Play.Catalog.Service.Controllers.v1
+namespace Play.Common.Application
 {
     using System;
     using System.Net.Mime;
     using System.Text.Json;
     using System.Threading.Tasks;
-    using Common.Application;
     using Microsoft.AspNetCore.Http;
 
-    internal static class ResponseExtensions
+    public static class ResponseExtensions
     {
         public static async ValueTask WriteResponseAsync(this Response response, HttpResponse httpResponse)
         {

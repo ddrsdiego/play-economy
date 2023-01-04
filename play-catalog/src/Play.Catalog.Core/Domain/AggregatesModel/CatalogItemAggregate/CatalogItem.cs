@@ -9,12 +9,12 @@
         {
         }
 
-        public CatalogItem(decimal price, string name, string description)
+        public CatalogItem(decimal price, string? name, string? description)
             : this(Guid.NewGuid().ToString().Split('-')[0], price, name, description, DateTimeOffset.UtcNow)
         {
         }
 
-        internal CatalogItem(string? id, decimal price, string name, string description, DateTimeOffset createAt)
+        internal CatalogItem(string? id, decimal price, string? name, string? description, DateTimeOffset createAt)
             : base(id)
         {
             Price = new UnitPrice(price);

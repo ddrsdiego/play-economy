@@ -2,10 +2,12 @@
 {
     using System.Threading;
     using System.Threading.Tasks;
+    using Common.Application;
+    using Common.Application.UseCase;
     using Microsoft.Extensions.Logging;
     using Domain.AggregateModel.CustomerAggregate;
 
-    public class GetCustomerByEmailUseCase : UseCaseExecutor<GetCustomerByEmailRequest, GetCustomerByEmailResponse>
+    public class GetCustomerByEmailUseCase : UseCaseExecutor<GetCustomerByEmailRequest>
     {
         private readonly ICustomerRepository _customerRepository;
 
@@ -15,7 +17,7 @@
             _customerRepository = customerRepository;
         }
 
-        protected override async Task<GetCustomerByEmailResponse> ExecuteSendAsync(GetCustomerByEmailRequest request,
+        protected override async Task<Response> ExecuteSendAsync(GetCustomerByEmailRequest request,
             CancellationToken token = default)
         {
             var customer = await _customerRepository.GetByEmailAsync(request.Email);
@@ -23,7 +25,7 @@
             var response =
                 new GetCustomerByEmailResponse(customer.Identification.Id, customer.Name, customer.Email.Value, customer.CreatedAt);
 
-            return response;
+            return Response.Ok(ResponseContent.Create(response));
         }
     }
 }

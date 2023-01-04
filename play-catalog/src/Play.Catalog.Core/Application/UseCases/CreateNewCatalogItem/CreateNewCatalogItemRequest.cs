@@ -5,7 +5,7 @@
     public class CreateNewCatalogItemRequest : UseCaseRequest
     {
 
-        public CreateNewCatalogItemRequest(decimal price, string name, string description)
+        public CreateNewCatalogItemRequest(decimal price, string? name, string? description)
         {
             Price = price;
             Name = name;
@@ -13,7 +13,7 @@
         }
         
         public decimal Price { get; }
-        public string Name { get; }
-        public string Description { get; }
+        public string? Name { get; }
+        public string? Description { get; }
     }
 }

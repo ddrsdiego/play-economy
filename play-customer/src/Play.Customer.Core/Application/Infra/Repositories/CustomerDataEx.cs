@@ -15,7 +15,7 @@ namespace Play.Customer.Core.Application.Infra.Repositories
         {
             return new CustomerData
             {
-                Id = customer.Identification.Value,
+                Id = customer.Identification.Id,
                 Properties = new CustomerPropertiesData
                 {
                     CustomerId = customer.Identification.Id,

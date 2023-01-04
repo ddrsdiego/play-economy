@@ -5,7 +5,7 @@
     using System.Threading.Tasks;
     using Microsoft.Extensions.Logging;
 
-    public abstract class UseCaseExecutor<TRequest> : IUseCaseExecutor<TRequest>
+    public abstract class  UseCaseExecutor<TRequest> : IUseCaseExecutor<TRequest>
         where TRequest : UseCaseRequest
     {
         protected UseCaseExecutor(ILogger logger)

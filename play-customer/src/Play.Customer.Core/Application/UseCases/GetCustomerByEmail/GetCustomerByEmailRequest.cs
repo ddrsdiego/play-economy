@@ -1,6 +1,8 @@
 ﻿namespace Play.Customer.Core.Application.UseCases.GetCustomerByEmail
 {
-    public readonly struct GetCustomerByEmailRequest
+    using Common.Application.UseCase;
+
+    public sealed class GetCustomerByEmailRequest : UseCaseRequest
     {
         public GetCustomerByEmailRequest(string email) => Email = email;
 
